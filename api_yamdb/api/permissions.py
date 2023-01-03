@@ -49,6 +49,7 @@ class AuthorStaffOrReadOnly(permissions.BasePermission):
             or request.user.is_moderator
         ):
             return True
+        return None
 
 
 class IsAdminOrReadOnly(permissions.BasePermission):

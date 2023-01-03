@@ -1,3 +1,8 @@
+from api.serializers import (CategorySerializer, CommentSerializer,
+                             GenreSerializer, GetTokenSerializer,
+                             ReviewSerializer, SignUpSerializer,
+                             TitleCreateSerializer, TitleSerializer,
+                             UserSerializer)
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
 from django.db import IntegrityError
@@ -9,12 +14,6 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import AccessToken
-
-from api.serializers import (CategorySerializer, CommentSerializer,
-                             GenreSerializer, GetTokenSerializer,
-                             ReviewSerializer, SignUpSerializer,
-                             TitleCreateSerializer, TitleSerializer,
-                             UserSerializer)
 from reviews.models import Category, Genre, Review, Title
 from users.models import User
 
@@ -57,6 +56,7 @@ class UserViewSet(viewsets.ModelViewSet):
                     and request.user.role == 'user'):
                 serializer.save(role='user')
             return Response(serializer.data, status=status.HTTP_200_OK)
+        return None
 
 
 class CategoryViewSet(UpdateDeleteViewSet):
