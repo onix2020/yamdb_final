@@ -1,6 +1,9 @@
 name: Django-app workflow
 
-on: [push]
+on: 
+  push:
+    branches:
+      - master
 
 jobs:
   tests:
@@ -26,6 +29,7 @@ jobs:
         # установка flake8 и его плагинов
         pip install flake8 pep8-naming flake8-broken-line flake8-return flake8-isort
         # установка зависимостей
+        cd api_yamdb/
         pip install -r requirements.txt 
 
     - name: Test with flake8
@@ -81,6 +85,7 @@ jobs:
             echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> .env
             echo DB_HOST=${{ secrets.DB_HOST }} >> .env
             echo DB_PORT=${{ secrets.DB_PORT }} >> .env
+            sudo docker system prune
             sudo docker-compose up -d
   send_message:
     runs-on: ubuntu-latest
@@ -92,4 +97,3 @@ jobs:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
         message: ${{ github.workflow }} успешно выполнен!
-
